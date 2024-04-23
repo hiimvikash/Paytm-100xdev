@@ -4,6 +4,17 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
 const {Account} = require('../models/accountModel');
 
+
+
+const verifyUser = async(req, res)=>{
+    if(req.user) return res.status(200).json({message : "loggedIn", user : req.user});
+    res.status(403).json({});
+}
+
+
+
+
+
 const signupBody = zod.object({
     username: zod.string().email(),
 	firstName: zod.string(),
@@ -134,4 +145,4 @@ const filterUserQuery = async (req, res) => {
 
 
 
-module.exports = {handleUserSignup, handleUserSignin, handleUserUpdate, filterUserQuery}
+module.exports = {handleUserSignup, handleUserSignin, handleUserUpdate, filterUserQuery, verifyUser}
